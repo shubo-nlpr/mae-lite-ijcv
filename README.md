@@ -1,21 +1,31 @@
 # MAE-Lite
+<p>
+<a href="https://link.springer.com/article/10.1007/s11263-024-02327-w"><img src="https://img.shields.io/badge/publication-Paper-<color>"></a>
+</p>
+
+> [**An Experimental Study on Exploring Strong Lightweight Vision Transformers via Masked Image Modeling Pre-training**](https://arxiv.org/abs/2404.12210)  
+> Jin Gao, Shubo Lin, Shaoru Wang*, Yutong Kou, Zeming Li, Liang Li, Congxuan Zhang, Xiaoqin Zhang, Yizheng Wang, Weiming Hu   
+> *IJCV 2025*
+
 > [**A Closer Look at Self-Supervised Lightweight Vision Transformers**](https://arxiv.org/abs/2205.14443)  
 > Shaoru Wang, Jin Gao*, Zeming Li, Xiaoqin Zhang, Weiming Hu  
 > *ICML 2023*
 
-## News
+## 🎉 News
+* **`2024.12`:** Our extended version is accepted by *IJCV 2025*!
 * **`2023.5`:** Code & models are released!
 * **`2023.4`:** Our paper is accepted by *ICML 2023*!
 * **`2022.5`:** Our initial version of the paper was published on Arxiv.
 
-## Introduction
+## ✨ Introduction
 **MAE-Lite** focuses on exploring the pre-training of lightweight Vision Transformers (ViTs). This repo provide the code and models for the study in the paper.
 * We provide advanced pre-training (based on [MAE](https://arxiv.org/abs/2111.06377)) and fine-tuning recipes for lightweight ViTs and demonstrate that *even vanilla lightweight ViT (*e.g.*, ViT-Tiny) beats most previous SOTA ConvNets and ViT derivatives with delicate network architecture design*. We achieve **79.0%** top-1 accuracy on ImageNet with vanilla ViT-Tiny (5.7M).
 * We provide code for the transfer evaluation of pre-trained models on several classification tasks (*e.g.*, [Oxford 102 Flower](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/), [Oxford-IIIT Pet](https://www.robots.ox.ac.uk/~vgg/data/pets/), [FGVC Aircraft](https://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/), [CIFAR](https://www.cs.toronto.edu/~kriz/cifar.html), *etc.*) and COCO detection tasks (based on [ViTDet](https://github.com/facebookresearch/detectron2/blob/main/projects/ViTDet)). We find that *the self-supervised pre-trained ViTs work worse than the supervised pre-trained ones on data-insufficient downstream tasks*.
 * We provide code for the analysis tools used in the paper to examine the layer representations and attention distance & entropy for the ViTs.
 * We provide code and models for our proposed knowledge distillation method for the pre-trained lightweight ViTs based on MAE, which shows superiority on the trasfer evaluation of data-insufficient classification tasks and dense prediction tasks.
+* ***(2025.02.26)*** We provide code and models for our improved [knowledge distillation method](projects/mae_lite/DISTILL.md) during pre-training and transfer to more dense prediction tasks including [detection](projects/eval_tools/det/DETECTION.md), [tracking](projects/eval_tools/track/TRACKING.md) and [semantic segmentation](projects/eval_tools/seg/SEGMENTATION.md), which enables SOTA performance on the ADE20K segmentation task (**42.8%** mIoU) and LaSOT tracking task (**66.1%** AUC) in the lightweight regime. The latter even surpasses all the current SOTA lightweight CPU-realtime trackers.
 
-## Getting Started
+## 📋 Getting Started
 
 ### Installation
 Setup conda environment:
@@ -86,6 +96,17 @@ python mae_lite/tools/eval.py -b 1024 -d 0 -f projects/eval_tools/finetuning_rpe
 
 And you will get `"Top1: 79.002"` if all right.
 
+download [MAE-Tiny-Distill-D²-FT-RPE](https://drive.google.com/file/d/1KRdkurYMfNxaIhjn3bELLL40Z-MEbMZj/view?usp=sharing) to `<BASE_FOLDER>/checkpoints/mae_tiny_distill_d2_400e_ft_rpe_1000e.pth.tar`
+
+```bash
+# 1024 batch-sizes on 1 GPUs:
+python mae_lite/tools/eval.py -b 1024 -d 0 -f projects/eval_tools/finetuning_rpe_exp.py \
+--ckpt <BASE_FOLDER>/checkpoints/mae_tiny_distill_d2_400e_ft_rpe_1000e.pth.tar \
+--exp-options pretrain_exp_name=mae_lite/mae_tiny_400e/ft_rpe_eval qv_bias=False
+```
+
+And you will get `"Top1: 79.444"` if all right.
+
 ### Pre-Training with Distillation
 Please refer to [DISTILL.md](projects/mae_lite/DISTILL.md).
 
@@ -95,13 +116,19 @@ Please refer to [TRANSFER.md](projects/eval_tools/TRANSFER.md).
 ### Transfer to Detection Tasks
 Please refer to [DETECTION.md](projects/eval_tools/det/DETECTION.md).
 
+### Transfer to Tracking Tasks
+Please refer to [TRACKING.md](projects/eval_tools/track/TRACKING.md).
+
+### Transfer to Semantic Segmentation Tasks
+Please refer to [SEGMENTATION.md](projects/eval_tools/seg/SEGMENTATION.md).
+
 ### Experiments of MoCo-v3
 Please refer to [MOCOV3.md](projects/mocov3/MOCOV3.md).
 
 ### Models Analysis Tools
 Please refer to [VISUAL.md](projects/eval_tools/VISUAL.md).
 
-## Main Results
+## 📄 Main Results
 |pre-train code |pre-train</br> epochs| fine-tune recipe | fine-tune epoch | accuracy | ckpt |
 |---|---|---|---|---|---|
 | - | - | [impr.](projects/eval_tools/finetuning_exp.py) | 300 | 75.8 | [link](https://drive.google.com/file/d/1RvhE2HucdWYHhKmPfHQW2A4EPpCHSYN_/view?usp=sharing) |
@@ -110,8 +137,11 @@ Please refer to [VISUAL.md](projects/eval_tools/VISUAL.md).
 |  |  | [impr.+RPE](projects/eval_tools/finetuning_rpe_exp.py) | 1000 | **79.0** | [link](https://drive.google.com/file/d/1zKDnMKs6tBTnC4liTYG2AMtotKcbKr4J/view?usp=sharing) |
 | [mae_lite_distill](projects/mae_lite/mae_lite_distill_exp.py) | 400 | - | - | - | [link](https://drive.google.com/file/d/1OCDMUEdcPhwoCPWGN0kahsHST7tbQmFe/view?usp=sharing) |
 |  |  | [impr.](projects/eval_tools/finetuning_exp.py) | 300 | 78.4 | [link](https://drive.google.com/file/d/1bcxwRUx6fq38M9eoBQbP2thwtU0j_9u6/view?usp=sharing) |
+| [mae_lite_d2_distill](projects/mae_lite/mae_lite_distill_d2_exp.py) | 400 | - | - | - | [link](https://drive.google.com/file/d/1gOKB8lSQ3IlOLNbi5Uc7saZO2mMClXNU/view?usp=sharing) |
+|  |  | [impr.](projects/eval_tools/finetuning_exp.py) | 300 | 78.7 | [link](https://drive.google.com/file/d/1c1KCRQ1MBtW6Zw4Uq1yAcv6zuYGcoWaW/view?usp=sharing) |
+|  |  | [impr.+RPE](projects/eval_tools/finetuning_rpe_exp.py) | 1000 | **79.4** | [link](https://drive.google.com/file/d/1KRdkurYMfNxaIhjn3bELLL40Z-MEbMZj/view?usp=sharing) |
 
-## Citation
+## 🏷️ Citation
 Please cite the following paper if this repo helps your research:
 ```bibtex
 @misc{wang2023closer,
@@ -120,9 +150,18 @@ Please cite the following paper if this repo helps your research:
       journal={arXiv preprint arXiv:2205.14443},
       year={2023},
 }
+
+@article{gao2025experimental,
+      title={An Experimental Study on Exploring Strong Lightweight Vision Transformers via Masked Image Modeling Pre-training},
+      author={Jin Gao, Shubo Lin, Shaoru Wang, Yutong Kou, Zeming Li, Liang Li, Congxuan Zhang, Xiaoqin Zhang, Yizheng Wang, Weiming Hu},
+      journal={International Journal of Computer Vision},
+      year={2025},
+      doi={10.1007/s11263-024-02327-w},
+      publisher={Springer}
+}
 ```
 
-## Acknowledge
+## 🤝 Acknowledge
 We thank for the code implementation from [timm](https://github.com/rwightman/pytorch-image-models), [MAE](https://github.com/facebookresearch/mae/tree/main), [MoCo-v3](https://github.com/facebookresearch/moco-v3).
 
 
