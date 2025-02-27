@@ -1,3 +1,6 @@
+# --------------------------------------------------------
+# Copyright (c) 2025 Institute of Automation Chinese Academy of Sciences. All Rights Reserved.
+# --------------------------------------------------------
 # Copyright (c) OpenMMLab. All rights reserved.
 import torch.nn as nn
 from mmcv.cnn import build_norm_layer

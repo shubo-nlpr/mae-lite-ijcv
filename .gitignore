@@ -232,3 +232,4 @@ work_dirs/
 mmseg/.mim
 data
 pretrain
+checkpoints

@@ -381,7 +381,6 @@ def vit_tiny_patch16_rpe(pretrained=False, global_pool=True, **kwargs):
         mlp_ratio=4,
         norm_layer=partial(nn.LayerNorm, eps=1e-6),
         use_mean_pooling=global_pool,
-        init_values=0.1,
         **defaults
     )
     return model
