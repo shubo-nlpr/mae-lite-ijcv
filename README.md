@@ -1,6 +1,8 @@
-# MAE-Lite
+# [MAE-Lite](https://arxiv.org/abs/2404.12210) (IJCV 2025)
 <p>
-<a href="https://link.springer.com/article/10.1007/s11263-024-02327-w"><img src="https://img.shields.io/badge/publication-Paper-<color>"></a>
+<a href="https://link.springer.com/article/10.1007/s11263-024-02327-w"><img src="https://img.shields.io/badge/publication-Paper-<color>"></a> 
+<a href="https://arxiv.org/abs/2404.12210" alt="arXiv">
+    <img src="https://img.shields.io/badge/arXiv-2404.12210-b31b1b.svg?style=flat" /></a>
 </p>
 
 <p>
@@ -35,7 +37,7 @@
 * We provide code for the analysis tools used in the paper to examine the layer representations and attention distance & entropy for the ViTs.
 * We provide code and models for our proposed knowledge distillation method for the pre-trained lightweight ViTs based on MAE, which shows superiority on the trasfer evaluation of data-insufficient classification tasks and dense prediction tasks.
 
-***update (2025.02.26)*** 
+***update (2025.02.28)*** 
 * We provide benchmark for more masked image modeling (MIM) pre-training methods ([BEiT](https://github.com/microsoft/unilm/tree/master/beit), [BootMAE](https://github.com/LightDXY/BootMAE.git), [MaskFeat](https://github.com/facebookresearch/SlowFast/blob/main/projects/maskfeat/README.md)) on lightweight ViTs and evaluate their transferability to [downstream tasks](projects/eval_tools/TRANSFER.md).
 * We provide code and models for our [decoupled distillation method](projects/mae_lite/DISTILL.md) during pre-training and transfer to more dense prediction tasks including [detection](projects/eval_tools/det/DETECTION.md), [tracking](projects/eval_tools/track/TRACKING.md) and [semantic segmentation](projects/eval_tools/seg/SEGMENTATION.md), which enables SOTA performance on the ADE20K segmentation task (**42.8%** mIoU) and LaSOT tracking task (**66.1%** AUC) in the lightweight regime. The latter even surpasses all the current SOTA lightweight CPU-realtime trackers.
 * We extend our distillation method to hierarchical ViTs ([Swin](projects/simmim/SIMMIM.md) and [Hiera](projects/mae_lite/HIERA.md)), which validate the generalizability and effectiveness of the distillation following our observation-analysis-solution flow.
